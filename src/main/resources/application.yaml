@@ -13,5 +13,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+  graphql:
+    graphiql:
+      enabled: true
 csv:
   file-name: "player.csv"
