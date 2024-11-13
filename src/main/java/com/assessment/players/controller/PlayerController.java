@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/players")
@@ -36,15 +35,8 @@ public class PlayerController {
     @GetMapping(path = "/{id}", produces = "application/json")
     public ResponseEntity<PlayerDto> getPlayerById(@PathVariable String id) {
         log.info("Fetching player with id: {}", id);
-        Optional<PlayerDto> playerOptional = playerService.getPlayerById(id);
-        return playerOptional
-                .map(player -> {
-                    log.info("Found user: {}", player);
-                    return ResponseEntity.ok(player);
-                })
-                .orElseGet(() -> {
-                    log.warn("User with id: {} not found", id);
-                    return ResponseEntity.notFound().build();
-                });
+        PlayerDto player = playerService.getPlayerById(id).orElseThrow();
+        log.info("Found player: {}", player);
+        return ResponseEntity.ok(player);
     }
 }
