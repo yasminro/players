@@ -10,7 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,11 +26,11 @@ public class PlayerServiceImpl implements PlayerService{
     }
 
     @Override
-    public Optional<PlayerDto> getPlayerById(String id) {
+    public PlayerDto getPlayerById(String id) {
         log.info("Retrieving player with id: {}",id);
         Player player = playerRepository.findById(id)
                 .orElseThrow(() -> new PlayerNotFoundException(id));
 
-        return Optional.of(PlayerDto.of(player));
+        return PlayerDto.of(player);
     }
 }

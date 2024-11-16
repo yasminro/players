@@ -77,12 +77,12 @@ class PlayerServiceTest {
 
         when(playerRepository.findById("123")).thenReturn(Optional.of(player));
 
-        Optional<PlayerDto> playerDto = playerService.getPlayerById("123");
+        PlayerDto playerDto = playerService.getPlayerById("123");
 
-        assertThat(playerDto).isPresent();
-        assertThat(playerDto.get().getPlayerID()).isEqualTo("123");
-        assertThat(playerDto.get().getNameFirst()).isEqualTo("John");
-        assertThat(playerDto.get().getNameLast()).isEqualTo("Doe");
+        assertThat(playerDto).isNotNull();
+        assertThat(playerDto.getPlayerID()).isEqualTo("123");
+        assertThat(playerDto.getNameFirst()).isEqualTo("John");
+        assertThat(playerDto.getNameLast()).isEqualTo("Doe");
         verify(playerRepository, times(1)).findById("123");
     }
 

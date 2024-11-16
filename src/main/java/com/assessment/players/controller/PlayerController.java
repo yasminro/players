@@ -35,7 +35,7 @@ public class PlayerController {
     @GetMapping(path = "/{id}", produces = "application/json")
     public ResponseEntity<PlayerDto> getPlayerById(@PathVariable String id) {
         log.info("Fetching player with id: {}", id);
-        PlayerDto player = playerService.getPlayerById(id).orElseThrow();
+        PlayerDto player = playerService.getPlayerById(id);
         log.info("Found player: {}", player);
         return ResponseEntity.ok(player);
     }
