@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 public class DataInitializer {
     private final PlayerRepository playerRepository;
-    private final CsvLoader csvLoader;
+    private final Loader<Player> csvLoader;
 
     @Value("${csv.file-name}")
     private String csvFileName;
@@ -36,7 +36,7 @@ public class DataInitializer {
     }
 
     private void loadDataToDb() {
-        List<Player> players = null;
+        List<Player> players;
         try {
             log.info("Loading player data from CSV file: {}", csvFileName);
             players = csvLoader.loadData(csvFileName);

@@ -16,6 +16,7 @@ import java.util.List;
 @Slf4j
 public class PlayerServiceImpl implements PlayerService{
     private final PlayerRepository playerRepository;
+
     @Override
     public List<PlayerDto> getAllPlayers(int page, int size) {
         log.info("Retrieving all players: page: {}, size: {}", page, size);
