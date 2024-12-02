@@ -15,10 +15,10 @@ import java.util.List;
 @Slf4j
 public class DataInitializer {
     private final PlayerRepository playerRepository;
-    private final Loader<Player> csvLoader;
+    private final LoaderFactory loaderFactory;
 
     @Value("${csv.file-name}")
-    private String csvFileName;
+    private String fileName;
 
     @PostConstruct
     public void init() {
@@ -38,8 +38,10 @@ public class DataInitializer {
     private void loadDataToDb() {
         List<Player> players;
         try {
-            log.info("Loading player data from CSV file: {}", csvFileName);
-            players = csvLoader.loadData(csvFileName);
+            String suffix = getSuffix(fileName);
+            log.info("Loading player data from {} file: {}",suffix, fileName);
+            Loader<Player> loader = loaderFactory.getLoader(suffix);
+            players = loader.loadData(fileName);
             log.info("Successfully loaded {} players from CSV.", players.size());
         } catch (Exception e) {
             log.error("Error loading player data from CSV: {}", e.getMessage(), e);
@@ -53,5 +55,9 @@ public class DataInitializer {
         } else {
             log.warn("No players to save to the database after loading from CSV.");
         }
+    }
+
+    private static String getSuffix(String fileName) {
+        return fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
     }
 }

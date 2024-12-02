@@ -14,7 +14,7 @@ import java.util.List;
 @Slf4j
 public class CsvLoader implements Loader<Player> {
 
-    public List<Player> loadData(String fileName) throws Exception {
+    public List<Player> loadData(String fileName) {
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(fileName);
         if (inputStream == null) {
             log.error("File not found: {}", fileName);
@@ -33,5 +33,10 @@ public class CsvLoader implements Loader<Player> {
             log.error("Error loading CSV file: {}", e.getMessage());
             throw new RuntimeException("Error parsing CSV", e);
         }
+    }
+
+    @Override
+    public String getTypeName() {
+        return "csv";
     }
 }
